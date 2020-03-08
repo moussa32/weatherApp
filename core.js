@@ -25,64 +25,70 @@ letsStart.addEventListener('click', () => {
 
         navigator.geolocation.getCurrentPosition(position => {
 
-            //After 0.6s will hide button and show data
-            setTimeout(() => {
-                toggle(leftSection);
-                toggle(rightSection);
+                //After 0.6s will hide button and show data
+                setTimeout(() => {
+                    toggle(leftSection);
+                    toggle(rightSection);
 
-                startDiv.remove();
-            }, 600);
+                    startDiv.remove();
+                }, 600);
 
-            long = position.coords.longitude;
-            lat = position.coords.latitude;
+                long = position.coords.longitude;
+                lat = position.coords.latitude;
 
-            //Proxy to skip CROS
-            const proxy = 'https://cors-anywhere.herokuapp.com/';
-            const api = `${proxy}https://api.darksky.net/forecast/80ec4d8a4737d5f8d72427db7ae38a74/${lat},${long}`;
+                //Proxy to skip CROS
+                const proxy = 'https://cors-anywhere.herokuapp.com/';
+                const api = `${proxy}https://api.darksky.net/forecast/80ec4d8a4737d5f8d72427db7ae38a74/${lat},${long}`;
 
-            fetch(api).then(response => {
-                    return response.json();
-                })
-                .then(data => {
-                    //Data that want to grab
-                    const {
-                        temperature,
-                        summary,
-                        humidity,
-                        icon,
-                        windSpeed,
-                        pressure
-                    } = data.currently;
-
-                    //Change Temperature
-                    let celsius = Math.floor((temperature - 32) * 5 / 9);
-
-                    //Set DOM elements value
-                    degree.textContent = celsius;
-                    timezone.textContent = data.timezone;
-                    teDesc.textContent = summary;
-                    windSpeedKH.textContent = windSpeed;
-                    humidityPres.textContent = Math.floor(humidity * 100);
-                    pressureBar.textContent = Math.round(pressure / 760 * 100) / 100;
-
-                    //Set Icon
-                    setIcons(icon, document.querySelector('.icon'));
-
-                    //Change Temperature to Celsius to Farenhit
-                    degSection.addEventListener('click', () => {
-                        if (degSectionSpan.textContent === 'F') {
-                            degSectionSpan.textContent = 'C';
-                            degree.textContent = celsius;
-                        } else {
-                            degSectionSpan.textContent = 'F';
-                            degree.textContent = Math.floor(temperature);
-                        }
+                fetch(api).then(response => {
+                        return response.json();
                     })
-                });
-        });
+                    .then(data => {
+                        //Data that want to grab
+                        const {
+                            temperature,
+                            summary,
+                            humidity,
+                            icon,
+                            windSpeed,
+                            pressure
+                        } = data.currently;
+
+                        //Change Temperature
+                        let celsius = Math.floor((temperature - 32) * 5 / 9);
+
+                        //Set DOM elements value
+                        degree.textContent = celsius;
+                        timezone.textContent = data.timezone;
+                        teDesc.textContent = summary;
+                        windSpeedKH.textContent = windSpeed;
+                        humidityPres.textContent = Math.floor(humidity * 100);
+                        pressureBar.textContent = Math.round(pressure / 760 * 100) / 100;
+
+                        //Set Icon
+                        setIcons(icon, document.querySelector('.icon'));
+
+                        //Change Temperature to Celsius to Farenhit
+                        degSection.addEventListener('click', () => {
+                            if (degSectionSpan.textContent === 'F') {
+                                degSectionSpan.textContent = 'C';
+                                degree.textContent = celsius;
+                            } else {
+                                degSectionSpan.textContent = 'F';
+                                degree.textContent = Math.floor(temperature);
+                            }
+                        })
+                    });
+            },
+            //If user denied access location
+            function (error) {
+                if (error.code == error.PERMISSION_DENIED)
+                    alert("برجاء السماح العثور علي موقعك لتحديد درجة حرارة المنطقة التي بها");
+            });
 
     } else {
-        document.querySelector('.location-timezone').textContent = 'مش شغال عندك';
+        //User device dosen't support api
+        alert('جهازك غير مدعم');
     }
 
     function setIcons(icon, iconID) {
