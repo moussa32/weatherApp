@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>تطبيق الطقس - Weather App</title>
+    <link rel='stylesheet' href='style.css'>
+    <link rel='icon' href='favicon.png'>
+    <link href="https://fonts.googleapis.com/css?family=Cairo:600&display=swap" rel="stylesheet">
+    <meta name='viewport' content='width=device-width,initial-scale=1.0'>
+</head>
+
+<body>
+    <div class='start'>
+        <input type='button' id='startButton' value='حالة الطقس'>
+    </div>
+    <div class='location'>
+        <h2 class='location-timezone'>المنطقة</h2>
+        <canvas class="icon" width="128" height="128"></canvas>
+    </div>
+    <div class="temperature">
+        <div class="group-section">
+            <h2 class="degree">0</h2>
+            <span>C</span>
+            <spa>درجة الحرارة</spa>
+        </div>
+        <div class="group-section ">
+            <h2 class="windSpeed">0</h2>
+            <span>Km/h</span>
+            <spa>سرعة الرياح</spa>
+        </div>
+        <div class="group-section ">
+            <h2 class="humidity">0</h2>
+            <span>%</span>
+            <spa>الرطوبة</spa>
+        </div>
+        <div class="group-section ">
+            <h2 class="pressure">0</h2>
+            <span>atm</span>
+            <spa>الضغط الجوي</spa>
+        </div>
+        <div class="temperature-description"></div>
+    </div>
+    <script src='skycons.js'></script>
+    <script src='core.js'></script>
+</body>
+
+</html>
