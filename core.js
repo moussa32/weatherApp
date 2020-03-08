@@ -84,6 +84,7 @@ letsStart.addEventListener('click', () => {
             function (error) {
                 if (error.code == error.PERMISSION_DENIED)
                     alert("برجاء السماح العثور علي موقعك لتحديد درجة حرارة المنطقة التي بها");
+                location.reload();
             });
 
     } else {
